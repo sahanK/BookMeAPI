@@ -11,7 +11,7 @@ const HotelSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, 'Please add a description'],
-        maxlength: [500, 'Description cannot be more than 500 characters'],
+        maxlength: [1000, 'Description cannot be more than 500 characters'],
         trim: true
     },
     email: {
@@ -26,11 +26,9 @@ const HotelSchema = new mongoose.Schema({
         type: {
             type: String,
             enum: ['Point'], 
-            required: true
         },
         coordinates: {
             type: [Number],
-            required: true,
             index: '2dsphere'
         },
         formattedAddress: String,
@@ -43,7 +41,7 @@ const HotelSchema = new mongoose.Schema({
     averageRating: {
         type: Number,
         min: [1, 'Rating must be at least 1'],
-        max: [2, 'Rating cannot be more than 10']
+        max: [10, 'Rating cannot be more than 10']
     },
     ceatedAt: {
         type: Date,
