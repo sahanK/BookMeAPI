@@ -1,4 +1,5 @@
 const Hotel = require('../models/Hotel');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Get all hotels
 // @route   GET /api/v1/hotels
@@ -11,8 +12,8 @@ exports.getHotels = async (req, res, next) => {
             count: hotels.length,
             data: hotels
         });
-    } catch (error) {
-        res.status(400).json({ success: false, error });
+    } catch (err) {
+        next(err);
     }
 }
 
@@ -23,14 +24,14 @@ exports.getHotel = async (req, res, next) => {
     try {
         const hotel = await Hotel.findById(req.params.id);
         if (!hotel) {
-            return res.status(400).json({ success: false, msg: "Not found" });
+            return next(new ErrorResponse(`Hotel not found with the id ${req.params.id}`, 404));
         }
         res.status(200).json({
             success: true,
             data: hotel
         });
-    } catch (error) {
-        res.status(400).json({ success: false, error });
+    } catch (err) {
+        next(err);
     }
     
 }
@@ -46,8 +47,8 @@ exports.createHotel = async (req, res, next) => {
             msg: `Hotel created`,
             data: hotel
         });
-    } catch (error) {
-        res.status(500).json({ success: false, error });
+    } catch (err) {
+        next(err);
     }
 
 }
@@ -62,11 +63,11 @@ exports.updateHotel = async (req, res, next) => {
             runValidators: true
         });
         if (!hotel) {
-            return res.status(400).json({ success: false, msg: "Not found" });
+            return next(new ErrorResponse(`Hotel not found with the id ${req.params.id}`, 404));
         }
         res.status(200).json({ success: true, data: hotel });
-    } catch (error) {
-        res.status(500).json({ success: false, error });
+    } catch (err) {
+        next(err);
     }
 }
 
@@ -77,13 +78,13 @@ exports.deleteHotel = async (req, res, next) => {
     try {
         const hotel = await Hotel.findByIdAndDelete(req.params.id);
         if (!hotel) {
-            return res.status(400).json({ success: false, mag: "Not found" });
+            return next(new ErrorResponse(`Hotel not found with the id ${req.params.id}`, 404));
         }
         res.status(200).json({
             success: true,
             msg: `Hotel deleted with id ${req.params.id}`
         });
-    } catch (error) {
-        res.status(500).json({ success: false, error });
+    } catch (err) {
+        next(err);
     }
 }
