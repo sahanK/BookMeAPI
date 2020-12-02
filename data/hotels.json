@@ -3,14 +3,22 @@
         "name": "Owl and the Pussycat Hotel",
         "address": "N 788 Matara Road, Talpe 80615 Sri Lanka",
         "description": "Our small, luxury hotel sits at the water's edge with 17 suites. We dreamed of a simple, fun and unpretentious place... with a sense of romance, food, and dancing in the moonlight... ",
+        "email": "owlandthepussycathotel@gmail.com",
+        "city": "Colombo",
+        "province": "western",
+        "zipcode": 80000,
+        "location": {"type": "Point", "coordinates" : [79.861244, 6.927079]},
         "averageRating": 7
     },
     {
         "name": "Taj Samudra Colombo",
-        "address": "25 Galle Face Center Road, Colombo 00300 Sri Lanka",
+        "address": "No 25 Galle Face Center Rd, Colombo 80000",
         "description": "Taj Samudra Colombo is located in the heart of the Colombo city, overlooking the azure waters of the Indian Ocean. The most stylish Executive category rooms are by far the best in design and comfort in the city of Colombo.",
         "email": "reservations.samudra@tajhotels.com",
+        "city": "Colombo",
+        "province": "western",
+        "zipcode": 80000,
+        "location": {"type": "Point", "coordinates" : [ 79.861244, 6.927079]},
         "averageRating": 9
     }
-
 ]

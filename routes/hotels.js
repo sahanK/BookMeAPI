@@ -5,8 +5,13 @@ const {
     getHotel, 
     createHotel, 
     updateHotel, 
-    deleteHotel 
+    deleteHotel,
+    getHotelsInRadius
 } = require('../controllers/hotels');
+
+router
+    .route('/radius/:latitude/:longitude/:distance')
+    .get(getHotelsInRadius);
 
 router
     .route('/')

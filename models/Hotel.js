@@ -24,22 +24,29 @@ const HotelSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add an address']
     },
+    city: {
+        type: String,
+        required: [true, 'Please add the city']
+    },
+    province: {
+        type: String,
+        required: [true, 'Please add the province']
+    },
+    zipcode: {
+        type: String,
+        required: [true, 'Please add the zipcode']
+    },
     location: {
         type: {
             type: String,
-            enum: ['Point'], 
+            required: true,
+            enum: ['Point']
         },
         coordinates: {
             type: [Number],
+            required: true,
             index: '2dsphere'
-        },
-        formattedAddress: String,
-        streetNumber: String,
-        street: String,
-        city: String,
-        district: String,
-        zipcode: String,
-        country: String
+        }
     },
     averageRating: {
         type: Number,
@@ -63,23 +70,15 @@ HotelSchema.pre('save', function (next) {
 });
 
 // Geocode & create location
+/*
 HotelSchema.pre('save', async function (next) {
-    const loc = await geocoder.geocode(this.address);
+    const loc = await geocoder.geocode(this.zipcode);
     this.location = {
         type: 'Point',
-        coordinates: [loc[0].longitude, loc[0].latitude],
-        formattedAddress: loc[0].formattedAddress,
-        streetNumber: loc[0].streetNumber,
-        street: loc[0].streetName,
-        city: loc[0].city,
-        district: loc[0].district,
-        zipcode: loc[0].zipcode,
-        country: loc[0].country
+        coordinates: [loc[0].longitude, loc[0].latitude]
     };
-
-    // Avoid saving the address
-    this.address = undefined;
     next();
 })
+*/
 
 module.exports = mongoose.model('Hotel', HotelSchema);

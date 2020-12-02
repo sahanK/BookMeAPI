@@ -1,6 +1,7 @@
 const Hotel = require('../models/Hotel');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
+const geocoder = require('../utils/geocoder');
 
 // @desc    Get all hotels
 // @route   GET /api/v1/hotels
@@ -65,5 +66,36 @@ exports.deleteHotel = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         msg: `Hotel deleted with id ${req.params.id}`
+    });
+});
+
+// @desc    Get hotels in a radius
+// @route   GET /api/v1/hotels/radius/:latitude/:longitude/:distance
+// @access  Public
+exports.getHotelsInRadius = asyncHandler(async (req, res, next) => {
+    const { latitude, longitude, distance } = req.params;
+
+    // get lat, long from geocoder
+    //const location = await geocoder.geocode(zipcode);
+    //const lat = location[0].latitude;
+    //const long = location[0].longitude;
+
+    // calculate radius using radians
+    // divide distance by radius of earth
+    // earth radius 6378 km
+    const radius = distance / 6378;
+
+    const hotels = await Hotel.find({
+        location: {
+            $geoWithin: {
+                $centerSphere: [[longitude, latitude], radius]
+            }
+        }
+    });
+
+    res.status(200).json({
+        success: true,
+        count: hotels.length,
+        data: hotels
     });
 });
