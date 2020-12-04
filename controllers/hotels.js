@@ -7,7 +7,35 @@ const geocoder = require('../utils/geocoder');
 // @route   GET /api/v1/hotels
 // @access  Public
 exports.getHotels = asyncHandler(async (req, res, next) => {
-    const hotels = await Hotel.find();
+
+    // copy req.query
+    const reqQuery = { ...req.query };
+
+    // fields to exclude
+    const removeFields = ['select', 'sort'];
+
+    // remove fields
+    removeFields.forEach(param => delete reqQuery[param]);
+
+    // make the initial query
+    let query = Hotel.find(reqQuery);
+
+    // SELECT FIELDS
+    if (req.query.select) {
+        const fields = req.query.select.split(',').join(' ');
+        // modify the query to select fields
+        query = query.select(fields);
+    }
+
+    // SORT BY FIELDS
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        //modify the query to sortBy fields
+        query = query.sort(sortBy);
+    }
+    
+    const hotels = await query;
+
     res.status(200).json({
         success: true,
         count: hotels.length,
