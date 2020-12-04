@@ -13,7 +13,7 @@ connectDB();
 
 // Route files
 const hotels = require('./routes/hotels');
-
+const guests = require('./routes/guests');
 
 
 const app = express();
@@ -28,6 +28,7 @@ if(process.env.NODE_ENV === 'development'){
 
 // Mount routers
 app.use('/api/v1/hotels', hotels);
+app.use('/api/v1/guests', guests);
 
 app.use(errorHandler);
 
