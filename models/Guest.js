@@ -18,7 +18,7 @@ const GuestSchema = new mongoose.Schema({
         trim: true
     },		
     phone: {
-        type: Number,
+        type: String,
         required: [true, 'Please add a phone number'],
         trim: true
     },	
