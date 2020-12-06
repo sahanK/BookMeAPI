@@ -9,6 +9,12 @@ const {
     getHotelsInRadius
 } = require('../controllers/hotels');
 
+// Include other resource routers
+const roomsRouter = require('./rooms');
+
+// Re-route into other resource routers
+router.use('/:hotelId/rooms', roomsRouter);
+
 router
     .route('/radius/:latitude/:longitude/:distance')
     .get(getHotelsInRadius);
