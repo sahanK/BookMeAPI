@@ -6,19 +6,19 @@ const RoomSchema = new mongoose.Schema({
         required: [true, 'Please add the room number'],
         trim: true
     },	
-    local_price: {
+    localPrice: {
         type: Number,
         required: [true, 'Please add the local price']
     },	
-    international_price: {
+    internationalPrice: {
         type: Number,
         required: [true, 'Please add the international price']
     },	
-    local_advance: {
+    localAdvance: {
         type: Number,
         required: [true, 'Please add the local advance']
     },	
-    international_advance: {
+    internationalAdvance: {
         type: Number,
         required: [true, 'Please add the international advance']
     },	

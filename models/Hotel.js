@@ -61,6 +61,10 @@ const HotelSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+},
+    {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true}
 });
 
 // Create a slug before save
@@ -69,6 +73,19 @@ HotelSchema.pre('save', function (next) {
     next();
 });
 
+// Reverse populate with virtuals
+HotelSchema.virtual('rooms', {
+    ref: 'Room',
+    localField: '_id',
+    foreignField: 'hotel',
+    justOne: false
+});
+
+// Cascade delete rooms when a hotel is deleted
+HotelSchema.pre('remove', async function (next) {
+    await this.model('Room').deleteMany({ hotel: this._id });
+    next();
+});
 // Geocode & create location
 /*
 HotelSchema.pre('save', async function (next) {

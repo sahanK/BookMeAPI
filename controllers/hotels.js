@@ -18,7 +18,7 @@ exports.getHotels = asyncHandler(async (req, res, next) => {
     removeFields.forEach(param => delete reqQuery[param]);
 
     // make the initial query
-    let query = Hotel.find(reqQuery);
+    let query = Hotel.find(reqQuery).populate('rooms');
 
     // SELECT FIELDS
     if (req.query.select) {
@@ -87,10 +87,11 @@ exports.updateHotel = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/hotels/:id
 // @access  Private
 exports.deleteHotel = asyncHandler(async (req, res, next) => {
-    const hotel = await Hotel.findByIdAndDelete(req.params.id);
+    const hotel = await Hotel.findById(req.params.id);
     if (!hotel) {
         return next(new ErrorResponse(`Hotel not found with the id ${req.params.id}`, 404));
     }
+    hotel.remove();
     res.status(200).json({
         success: true,
         msg: `Hotel deleted with id ${req.params.id}`
