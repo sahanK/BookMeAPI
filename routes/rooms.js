@@ -7,7 +7,13 @@ const {
     deleteRoom
 } = require('../controllers/rooms');
 
-const router = express.Router({mergeParams: true});
+const router = express.Router({ mergeParams: true });
+
+// Include other resource routers
+const bookingsRouter = require('./bookings');
+
+// Re-route into other resource routers
+router.use('/:roomId/bookings', bookingsRouter);
 
 router.route('/')
     .get(getRooms)

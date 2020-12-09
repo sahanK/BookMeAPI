@@ -11,9 +11,11 @@ const {
 
 // Include other resource routers
 const roomsRouter = require('./rooms');
+const bookingsRouter = require('./bookings');
 
 // Re-route into other resource routers
 router.use('/:hotelId/rooms', roomsRouter);
+router.use('/:hotelId/bookings', bookingsRouter);
 
 router
     .route('/radius/:latitude/:longitude/:distance')

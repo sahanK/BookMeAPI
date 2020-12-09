@@ -80,9 +80,9 @@ exports.updateRoom = asyncHandler(async (req, res, next) => {
     });
 });
 
-// @desc    Get all rooms
-// @route   GET /api/v1/rooms
-// @access  Public
+// @desc    Delete room
+// @route   DELETE /api/v1/rooms
+// @access  Private
 exports.deleteRoom = asyncHandler(async (req, res, next) => {
     const room = await Room.findById(req.params.id);
     if (!room) {

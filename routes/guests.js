@@ -8,6 +8,12 @@ const {
     deleteGuest
 } = require('../controllers/guests');
 
+// Include other resource routers
+const bookingsRouter = require('./bookings');
+
+// Re-route into other resource routers
+router.use('/:guestId/bookings', bookingsRouter);
+
 router
     .route('/')
     .get(getGuests)

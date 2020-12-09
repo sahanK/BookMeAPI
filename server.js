@@ -15,6 +15,7 @@ connectDB();
 const hotels = require('./routes/hotels');
 const guests = require('./routes/guests');
 const rooms = require('./routes/rooms');
+const bookings = require('./routes/bookings');
 
 
 const app = express();
@@ -31,6 +32,7 @@ if(process.env.NODE_ENV === 'development'){
 app.use('/api/v1/hotels', hotels);
 app.use('/api/v1/guests', guests);
 app.use('/api/v1/rooms', rooms);
+app.use('/api/v1/bookings', bookings);
 
 app.use(errorHandler);
 
