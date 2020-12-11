@@ -6,7 +6,8 @@ const {
     createHotel, 
     updateHotel, 
     deleteHotel,
-    getHotelsInRadius
+    getHotelsInRadius,
+    photoUpload
 } = require('../controllers/hotels');
 
 // Include other resource routers
@@ -20,6 +21,10 @@ router.use('/:hotelId/bookings', bookingsRouter);
 router
     .route('/radius/:latitude/:longitude/:distance')
     .get(getHotelsInRadius);
+
+router
+    .route('/:id/photos')
+    .put(photoUpload);
 
 router
     .route('/')
