@@ -142,41 +142,29 @@ exports.photoUpload = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`Please upload a photo`, 400));
     }
 
-    let files = [];
-    let fileNames = [];
+    const file = req.files.file;
 
-    if (req.files.file.length > 1) {
-        files = req.files.file;
+    if (!file.mimetype.startsWith('image')) {
+        return next(new ErrorResponse('Please upload an image file', 400));
     }
-    else {
-        files.push(req.files.file);
+    if (file.size > process.env.MAX_FILE_UPLOAD) {
+        return next(new ErrorResponse(`Please upload an image size less than ${process.env.MAX_FILE_UPLOAD}`, 400));
     }
 
-    files.forEach(function (file, index) {
-        if (!file.mimetype.startsWith('image')) {
-            return next(new ErrorResponse('Please upload an image file', 400));
-        }
-        if (file.size > process.env.MAX_FILE_UPLOAD) {
-            return next(new ErrorResponse(`Please upload an image size less than ${process.env.MAX_FILE_UPLOAD}`, 400));
+    file.name = `photo_${hotel._id}${path.parse(file.name).ext}`;
+
+    file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
+        if (err) {
+            return next(new ErrorResponse(`Problem with photo upload`, 500));
         }
 
-        file.name = `${hotel._id}_photo_${index}${path.parse(file.name).ext}`;
-
-        fileNames.push(file.name);
-
-        file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
-            if (err) {
-                return next(new ErrorResponse(`Problem with photo upload`, 500));
-            }
+        await Hotel.findByIdAndUpdate(req.params.id, {
+            photo: file.name
         });
-    });
-
-    await Hotel.findByIdAndUpdate(req.params.id, {
-        photos: fileNames
-    });
-
-    res.status(200).json({
-        success: true,
-        data: fileNames
+    
+        res.status(200).json({
+            success: true,
+            data: file.name
+        });
     });
 });

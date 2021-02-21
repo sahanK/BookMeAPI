@@ -5,6 +5,7 @@ const colors = require('colors');
 const connectDB = require('./config/db')
 const errorHandler = require('./middleware/error');
 const fileUpload = require('express-fileupload');
+const path = require('path');
 
 // Load env variabls
 dotenv.config({ path: './config/config.env' });
@@ -31,6 +32,9 @@ if(process.env.NODE_ENV === 'development'){
 
 // File uploading middleware
 app.use(fileUpload());
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
 app.use('/api/v1/hotels', hotels);

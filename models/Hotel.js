@@ -61,8 +61,8 @@ const HotelSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    photos: {
-        type: [String]
+    photo: {
+        type: String
     }
 },
     {

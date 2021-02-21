@@ -23,7 +23,7 @@ router
     .get(getHotelsInRadius);
 
 router
-    .route('/:id/photos')
+    .route('/:id/photo')
     .put(photoUpload);
 
 router
