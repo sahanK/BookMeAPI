@@ -70,3 +70,4 @@ exports.deleteGuest = asyncHandler(async (req, res, next) => {
         message: `Guest deleted with id ${req.params.id}`
     });
 });
+

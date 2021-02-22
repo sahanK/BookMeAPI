@@ -18,6 +18,7 @@ const hotels = require('./routes/hotels');
 const guests = require('./routes/guests');
 const rooms = require('./routes/rooms');
 const bookings = require('./routes/bookings');
+const auth = require('./routes/auth');
 
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/api/v1/hotels', hotels);
 app.use('/api/v1/guests', guests);
 app.use('/api/v1/rooms', rooms);
 app.use('/api/v1/bookings', bookings);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 
