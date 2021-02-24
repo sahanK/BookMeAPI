@@ -20,6 +20,10 @@ const HotelSchema = new mongoose.Schema({
         type: String,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please add a valid email']
     },
+    phone: {
+        type: [Number],
+        required: [true, 'Please add phone number']
+    },
     address: {
         type: String,
         required: [true, 'Please add an address']
