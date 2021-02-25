@@ -11,12 +11,12 @@ const ErrorResponse = require('../utils/errorResponse');
 exports.getRooms = asyncHandler(async (req, res, next) => {
     let query;
     if (req.params.hotelId) {
-        query = Room.find({ hotel: req.params.hotelId }).populate({
+        query = Room.find({ hotel: req.params.hotelId, available: true }).populate({
             path: 'hotel',
             select: 'name'
         });
     } else {
-        query = Room.find().populate({
+        query = Room.find(req.query).populate({
             path: 'hotel',
             select: 'name'
         });

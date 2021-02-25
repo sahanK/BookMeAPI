@@ -20,6 +20,7 @@ exports.createBooking = asyncHandler(async (req, res, next) => {
     if (!guest) {
         return next(new ErrorResponse(`No guest with id ${req.body.guest}`, 404));
     }
+    await Room.findByIdAndUpdate(req.params.roomId, { available: false });
     req.body.hotel = req.params.hotelId;
     req.body.room = req.params.roomId;
     const booking = await Booking.create(req.body);
